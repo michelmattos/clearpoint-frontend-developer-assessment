@@ -1,6 +1,6 @@
 import './App.css'
-import { Image, Alert, Container, Row, Col } from 'react-bootstrap'
-import React, { useState, useEffect } from 'react'
+import { Image, Alert, Container, Row, Col, ToastContainer, Toast } from 'react-bootstrap'
+import React, { useState, useEffect, useRef } from 'react'
 import { AddTodoItem } from './components/AddTodoItem'
 import { TodoItems } from './components/TodoItems'
 
@@ -9,6 +9,15 @@ const axios = require('axios')
 const App = () => {
   const [items, setItems] = useState([])
   const [addTodoErrorMessage, setAddTodoErrorMessage] = useState()
+  const [getItemsErrorMessage, setGetItemsErrorMessage] = useState()
+  const [toggleTodoErrorMessage, setToggleTodoErrorMessage] = useState()
+
+  const isMounted = useRef(true)
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   useEffect(() => {
     getItems()
@@ -17,11 +26,14 @@ const App = () => {
   async function getItems() {
     try {
       const res = await axios.get('http://localhost:7000/api/todoItems')
-      if (res.data) {
+      if (res.data && isMounted.current) {
         setItems(res.data)
+        setGetItemsErrorMessage(undefined)
       }
     } catch (error) {
-      console.error(error)
+      if (isMounted.current) {
+        setGetItemsErrorMessage(error.response.data)
+      }
     }
   }
 
@@ -29,9 +41,13 @@ const App = () => {
     try {
       await axios.post('http://localhost:7000/api/todoItems', { description, isCompleted: false })
       await getItems()
-      setAddTodoErrorMessage(undefined)
+      if (isMounted.current) {
+        setAddTodoErrorMessage(undefined)
+      }
     } catch (error) {
-      setAddTodoErrorMessage(error.response.data)
+      if (isMounted.current) {
+        setAddTodoErrorMessage(error.response.data)
+      }
     }
   }
 
@@ -39,13 +55,44 @@ const App = () => {
     try {
       await axios.put(`http://localhost:7000/api/todoItems/${item.id}`, { ...item, isCompleted: !item.isCompleted })
       await getItems()
+      if (isMounted.current) {
+        setToggleTodoErrorMessage(undefined)
+      }
     } catch (error) {
-      console.error(error)
+      if (isMounted.current) {
+        setToggleTodoErrorMessage(error.response.data)
+      }
     }
   }
 
   return (
-    <div className="App">
+    <div className="App position-relative">
+      <ToastContainer data-testid="toasts" aria-live="polite" position="top-end" className="p-3">
+        <Toast
+          show={getItemsErrorMessage !== undefined}
+          onClose={() => setGetItemsErrorMessage(undefined)}
+          autohide
+          delay={4000}
+          bg="danger"
+        >
+          <Toast.Header>
+            <strong className="me-auto">Something went wrong</strong>
+          </Toast.Header>
+          <Toast.Body>{getItemsErrorMessage}</Toast.Body>
+        </Toast>
+        <Toast
+          show={toggleTodoErrorMessage !== undefined}
+          onClose={() => setToggleTodoErrorMessage(undefined)}
+          autohide
+          delay={4000}
+          bg="danger"
+        >
+          <Toast.Header>
+            <strong className="me-auto">Something went wrong</strong>
+          </Toast.Header>
+          <Toast.Body>{toggleTodoErrorMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
       <Container>
         <Row>
           <Col>
