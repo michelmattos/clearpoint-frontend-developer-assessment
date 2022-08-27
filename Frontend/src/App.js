@@ -11,16 +11,19 @@ const App = () => {
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    // todo
+    getItems()
   }, [])
 
-  const handleDescriptionChange = (event) => {
-    // todo
+  const handleDescriptionChange = (description) => {
+    setDescription(description)
   }
 
   async function getItems() {
     try {
-      alert('todo')
+      const res = await axios.get('http://localhost:7000/api/todoItems')
+      if (res.data) {
+        setItems(res.data)
+      }
     } catch (error) {
       console.error(error)
     }
@@ -28,7 +31,8 @@ const App = () => {
 
   async function handleAdd() {
     try {
-      alert('todo')
+      await axios.post('http://localhost:7000/api/todoItems', { description, isCompleted: false })
+      await getItems()
     } catch (error) {
       console.error(error)
     }
