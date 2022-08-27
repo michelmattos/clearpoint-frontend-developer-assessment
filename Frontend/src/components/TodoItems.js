@@ -1,7 +1,7 @@
-import {Button, Table} from "react-bootstrap";
-import React from "react";
+import { Button, Table } from 'react-bootstrap'
+import React from 'react'
 
-export const TodoItems = ({items, getItems, handleMarkAsComplete}) => (
+export const TodoItems = ({ items, getItems, handleMarkAsComplete }) => (
   <>
     <h1>
       Showing {items.length} Item(s){' '}
@@ -12,24 +12,24 @@ export const TodoItems = ({items, getItems, handleMarkAsComplete}) => (
 
     <Table striped bordered hover>
       <thead>
-      <tr>
-        <th>Id</th>
-        <th>Description</th>
-        <th>Action</th>
-      </tr>
+        <tr>
+          <th>Id</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody>
-      {items.map((item) => (
-        <tr key={item.id}>
-          <td>{item.id}</td>
-          <td>{item.description}</td>
-          <td>
-            <Button variant="warning" size="sm" onClick={() => handleMarkAsComplete(item)}>
-              Mark as completed
-            </Button>
-          </td>
-        </tr>
-      ))}
+        {items.map((item) => (
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.description}</td>
+            <td>
+              <Button variant="warning" size="sm" onClick={() => handleMarkAsComplete(item)}>
+                Mark as completed
+              </Button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   </>

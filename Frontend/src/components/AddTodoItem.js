@@ -1,7 +1,7 @@
-import {Button, Col, Container, Form, Row, Stack} from "react-bootstrap";
-import React from "react";
+import { Button, Col, Container, Form, Row, Stack } from 'react-bootstrap'
+import React from 'react'
 
-export const AddTodoItem = ({description, handleDescriptionChange, handleAdd, handleClear}) => (
+export const AddTodoItem = ({ description, handleDescriptionChange, handleAdd, handleClear }) => (
   <Container>
     <h1>Add Item</h1>
     <Form.Group as={Row} className="mb-3" controlId="formAddTodoItem">
@@ -13,7 +13,7 @@ export const AddTodoItem = ({description, handleDescriptionChange, handleAdd, ha
           type="text"
           placeholder="Enter description..."
           value={description}
-          onChange={evt => handleDescriptionChange(evt.target.value)}
+          onChange={(evt) => handleDescriptionChange(evt.target.value)}
         />
       </Col>
     </Form.Group>

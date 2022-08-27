@@ -1,8 +1,8 @@
 import './App.css'
 import { Image, Alert, Container, Row, Col } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
-import {AddTodoItem} from "./components/AddTodoItem";
-import {TodoItems} from "./components/TodoItems";
+import { AddTodoItem } from './components/AddTodoItem'
+import { TodoItems } from './components/TodoItems'
 
 const axios = require('axios')
 
@@ -79,7 +79,12 @@ const App = () => {
         </Row>
         <Row>
           <Col>
-            <AddTodoItem description={description} handleDescriptionChange={handleDescriptionChange} handleAdd={handleAdd} handleClear={handleClear} />
+            <AddTodoItem
+              description={description}
+              handleDescriptionChange={handleDescriptionChange}
+              handleAdd={handleAdd}
+              handleClear={handleClear}
+            />
           </Col>
         </Row>
         <br />

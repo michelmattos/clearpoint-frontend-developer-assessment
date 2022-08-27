@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from "@testing-library/user-event"
-import {AddTodoItem} from "./AddTodoItem";
+import userEvent from '@testing-library/user-event'
+import { AddTodoItem } from './AddTodoItem'
 
 test('Renders "description" as a field value', () => {
   const description = 'My todo'
@@ -32,28 +32,16 @@ test('Calls "handleDescriptionChange" when description changed', () => {
 
 test('Calls "handleAdd" when an item is added', () => {
   const handleAdd = jest.fn()
-  render(
-    <AddTodoItem
-      description=""
-      handleAdd={handleAdd}
-      handleDescriptionChange={() => {}}
-      handleClear={() => {}}
-    />
-  )
-  userEvent.click(screen.getByRole('button', {name: /add item/i}))
+  render(<AddTodoItem description="" handleAdd={handleAdd} handleDescriptionChange={() => {}} handleClear={() => {}} />)
+  userEvent.click(screen.getByRole('button', { name: /add item/i }))
   expect(handleAdd).toHaveBeenCalledTimes(1)
 })
 
 test('Calls "handleClear" when clicked', () => {
   const handleClear = jest.fn()
   render(
-    <AddTodoItem
-      description=""
-      handleClear={handleClear}
-      handleAdd={() => {}}
-      handleDescriptionChange={() => {}}
-    />
+    <AddTodoItem description="" handleClear={handleClear} handleAdd={() => {}} handleDescriptionChange={() => {}} />
   )
-  userEvent.click(screen.getByRole('button', {name: /clear/i}))
+  userEvent.click(screen.getByRole('button', { name: /clear/i }))
   expect(handleClear).toHaveBeenCalledTimes(1)
 })
