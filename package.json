@@ -1,13 +1,13 @@
 {
   "name": "clearpoint-frontend-developer-assessment",
   "version": "1.0.0",
+  "private": true,
   "description": "This repository contains code used in the interview process for developers joining the Front-end Practice at ClearPoint.",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently -p \"[{name}]\" -n \"API,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm:dev:api\" \"npm:dev:client\"",
     "dev:api": "npm --prefix ./Backend/TodoList.Api run dev",
-    "dev:client": "npm --prefix ./Frontend run start:default-browser"
+    "dev:client": "npm --prefix ./Frontend run start:default-browser",
+    "test:e2e": "npm --prefix ./E2E run test"
   },
   "repository": {
     "type": "git",
