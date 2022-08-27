@@ -8,6 +8,7 @@ const axios = require('axios')
 
 const App = () => {
   const [items, setItems] = useState([])
+  const [addTodoErrorMessage, setAddTodoErrorMessage] = useState()
 
   useEffect(() => {
     getItems()
@@ -28,8 +29,9 @@ const App = () => {
     try {
       await axios.post('http://localhost:7000/api/todoItems', { description, isCompleted: false })
       await getItems()
+      setAddTodoErrorMessage(undefined)
     } catch (error) {
-      console.error(error)
+      setAddTodoErrorMessage(error.response.data)
     }
   }
 
@@ -75,7 +77,7 @@ const App = () => {
         </Row>
         <Row>
           <Col>
-            <AddTodoItem handleAdd={handleAdd} />
+            <AddTodoItem handleAdd={handleAdd} errorMessage={addTodoErrorMessage} />
           </Col>
         </Row>
         <br />

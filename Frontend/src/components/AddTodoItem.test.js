@@ -20,3 +20,9 @@ test('Clears field when "clear" button is clicked', () => {
   userEvent.click(screen.getByRole('button', { name: /clear/i }))
   expect(screen.getByLabelText(/description/i)).toHaveValue('')
 })
+
+test('Shows message when an error exist', () => {
+  const errorMessage = 'Uh oh!'
+  render(<AddTodoItem errorMessage={errorMessage} />)
+  expect(screen.getByLabelText(/description/i)).toHaveErrorMessage(errorMessage)
+})
