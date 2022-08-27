@@ -1,6 +1,10 @@
 describe("to-do app", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit("/")
+  })
+
+  afterEach(() => {
+    cy.request("delete", "http://localhost:7000/api/todoItems/test/clearAll")
   })
 
   it("displays headings", () => {

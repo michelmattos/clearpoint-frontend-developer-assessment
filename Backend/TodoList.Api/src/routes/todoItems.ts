@@ -130,3 +130,11 @@ todoItemRouter.delete("/:id", async (req: Request, res: Response) => {
     return res.status(500).send(e.message)
   }
 })
+
+if (process.env.TS_NODE_DEV === "true") {
+  // Add a "clear all data" endpoint for testing
+  todoItemRouter.delete("/test/clearAll", async (_, res: Response) => {
+    todoItems = {}
+    return res.sendStatus(204)
+  })
+}
