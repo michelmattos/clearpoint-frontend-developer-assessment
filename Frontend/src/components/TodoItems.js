@@ -5,7 +5,7 @@ export const TodoItems = ({items, getItems, handleMarkAsComplete}) => (
   <>
     <h1>
       Showing {items.length} Item(s){' '}
-      <Button variant="primary" className="pull-right" onClick={() => getItems()}>
+      <Button variant="primary" className="pull-right" onClick={getItems}>
         Refresh
       </Button>
     </h1>

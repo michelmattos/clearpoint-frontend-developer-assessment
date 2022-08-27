@@ -13,7 +13,7 @@ export const AddTodoItem = ({description, handleDescriptionChange, handleAdd, ha
           type="text"
           placeholder="Enter description..."
           value={description}
-          onChange={handleDescriptionChange}
+          onChange={evt => handleDescriptionChange(evt.target.value)}
         />
       </Col>
     </Form.Group>
