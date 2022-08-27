@@ -35,7 +35,8 @@ const App = () => {
 
   async function handleMarkAsComplete(item) {
     try {
-      alert('todo')
+      await axios.put(`http://localhost:7000/api/todoItems/${item.id}`, { ...item, isCompleted: !item.isCompleted })
+      await getItems()
     } catch (error) {
       console.error(error)
     }

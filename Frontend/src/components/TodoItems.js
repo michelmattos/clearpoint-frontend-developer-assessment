@@ -15,6 +15,7 @@ export const TodoItems = ({ items, getItems, handleMarkAsComplete }) => (
         <tr>
           <th>Id</th>
           <th>Description</th>
+          <th>Completed</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -23,9 +24,10 @@ export const TodoItems = ({ items, getItems, handleMarkAsComplete }) => (
           <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.description}</td>
+            <td>{item.isCompleted ? 'Yes' : 'No'}</td>
             <td>
               <Button variant="warning" size="sm" onClick={() => handleMarkAsComplete(item)}>
-                Mark as completed
+                Mark as {item.isCompleted ? 'uncompleted' : 'completed'}
               </Button>
             </td>
           </tr>
