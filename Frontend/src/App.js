@@ -7,16 +7,11 @@ import { TodoItems } from './components/TodoItems'
 const axios = require('axios')
 
 const App = () => {
-  const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
 
   useEffect(() => {
     getItems()
   }, [])
-
-  const handleDescriptionChange = (description) => {
-    setDescription(description)
-  }
 
   async function getItems() {
     try {
@@ -29,17 +24,13 @@ const App = () => {
     }
   }
 
-  async function handleAdd() {
+  async function handleAdd(description) {
     try {
       await axios.post('http://localhost:7000/api/todoItems', { description, isCompleted: false })
       await getItems()
     } catch (error) {
       console.error(error)
     }
-  }
-
-  function handleClear() {
-    setDescription('')
   }
 
   async function handleMarkAsComplete(item) {
@@ -83,12 +74,7 @@ const App = () => {
         </Row>
         <Row>
           <Col>
-            <AddTodoItem
-              description={description}
-              handleDescriptionChange={handleDescriptionChange}
-              handleAdd={handleAdd}
-              handleClear={handleClear}
-            />
+            <AddTodoItem handleAdd={handleAdd} />
           </Col>
         </Row>
         <br />

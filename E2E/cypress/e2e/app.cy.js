@@ -1,10 +1,7 @@
 describe("to-do app", () => {
   beforeEach(() => {
-    cy.visit("/")
-  })
-
-  afterEach(() => {
     cy.request("delete", "http://localhost:7000/api/todoItems/test/clearAll")
+    cy.visit("/")
   })
 
   it("can add a new todo", () => {

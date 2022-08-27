@@ -2,46 +2,21 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { AddTodoItem } from './AddTodoItem'
 
-test('Renders "description" as a field value', () => {
-  const description = 'My todo'
-  render(
-    <AddTodoItem
-      description={description}
-      handleAdd={() => {}}
-      handleClear={() => {}}
-      handleDescriptionChange={() => {}}
-    />
-  )
-  expect(screen.getByLabelText(/description/i).value).toBe(description)
-})
-
-test('Calls "handleDescriptionChange" when description changed', () => {
-  const handleDescriptionChange = jest.fn()
-  render(
-    <AddTodoItem
-      description=""
-      handleDescriptionChange={handleDescriptionChange}
-      handleAdd={() => {}}
-      handleClear={() => {}}
-    />
-  )
-  const value = 'a'
-  userEvent.type(screen.getByLabelText(/description/i), value)
-  expect(handleDescriptionChange).toHaveBeenCalledWith(value)
-})
-
 test('Calls "handleAdd" when an item is added', () => {
   const handleAdd = jest.fn()
-  render(<AddTodoItem description="" handleAdd={handleAdd} handleDescriptionChange={() => {}} handleClear={() => {}} />)
+  const todo = 'My todo'
+  render(<AddTodoItem handleAdd={handleAdd} />)
+  userEvent.type(screen.getByLabelText(/description/i), todo)
   userEvent.click(screen.getByRole('button', { name: /add item/i }))
   expect(handleAdd).toHaveBeenCalledTimes(1)
+  expect(handleAdd).toHaveBeenCalledWith(todo)
 })
 
-test('Calls "handleClear" when clicked', () => {
-  const handleClear = jest.fn()
-  render(
-    <AddTodoItem description="" handleClear={handleClear} handleAdd={() => {}} handleDescriptionChange={() => {}} />
-  )
+test('Clears field when "clear" button is clicked', () => {
+  const todo = 'My todo'
+  render(<AddTodoItem handleAdd={() => {}} />)
+  userEvent.type(screen.getByLabelText(/description/i), todo)
+  expect(screen.getByLabelText(/description/i)).toHaveValue(todo)
   userEvent.click(screen.getByRole('button', { name: /clear/i }))
-  expect(handleClear).toHaveBeenCalledTimes(1)
+  expect(screen.getByLabelText(/description/i)).toHaveValue('')
 })
